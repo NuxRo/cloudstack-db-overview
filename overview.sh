@@ -45,7 +45,6 @@ echo -n "- Used:  "; $mysql_command -e "select sum(used_bytes)/1099511627776 fro
 echo "--------------------------------"
 for podid in $( $mysql_command -e "select id from host_pod_ref where removed is null and data_center_id="$zone";" ); do
 echo -n "- POD: "; $mysql_command -e "select name from host_pod_ref where id="$podid";"
-#$mysql_command -e "select name from cluster where removed is null and data_center_id="$zone" and pod_id="$podid";"
 for clusterid in $($mysql_command -e "select id from cluster where removed is null and data_center_id="$zone" and pod_id="$podid";"); do
 echo -n "-- CLUSTER: "
 $mysql_command -e "select name from cluster where removed is null and data_center_id="$zone" and pod_id="$podid" and id="$clusterid";"
