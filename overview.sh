@@ -11,14 +11,18 @@ export PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin
 dbuser="root"
 dbpassword="password"
 db="cloud"
+dbhost="localhost"
 
-mysql_command="mysql -u$dbuser -p$dbpassword $db -N -s -r"
+mysql_command="mysql -u"$dbuser" -p"$dbpassword" -h"$dbhost" "$db" -N -s -r"
 
 #################################################################################
 
 echo -n "Cloudstack version: "; $mysql_command -e "select version from version where step='"Complete"' order by id desc limit 1;"
+echo
 echo "Management servers:"
 $mysql_command -e "select id,name,service_ip from mshost where removed is null;"
+echo
+echo -n "Virtual Machines count: "; $mysql_command -e "select count(id) from vm_instance where removed is null;"
 echo
 echo "ZONES:"
 
