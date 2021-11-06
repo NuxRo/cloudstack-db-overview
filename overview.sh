@@ -17,18 +17,33 @@ mysql_command="mysql -u"$dbuser" -p"$dbpassword" -h"$dbhost" "$db" -N -s -r"
 
 #################################################################################
 
+echo "--------------------------------"
+echo "SUMMARY:"
+echo
 echo -n "Cloudstack version: "; $mysql_command -e "select version from version where step='"Complete"' order by id desc limit 1;"
 echo
 echo "Management servers:"
-$mysql_command -e "select id,name,service_ip from mshost where removed is null;"
+$mysql_command -e "select name,service_ip from mshost where removed is null;"
+
 echo
-echo -n "Virtual Machines count: "; $mysql_command -e "select count(id) from vm_instance where removed is null;"
+echo -n "Zones: "; $mysql_command -e "select count(id) from data_center where removed is null;"
+echo -n "Pods: "; $mysql_command -e "select count(id) from host_pod_ref where removed is null;"
+echo -n "Clusters: "; $mysql_command -e "select count(id) from cluster where removed is null;"
+echo -n "Hypervisors: "; $mysql_command -e "select count(id) from host where type='"ROUTING"' and removed is null;"
+echo -n "Virtual Machines: "; $mysql_command -e "select count(id) from vm_instance where removed is null;"
+
+echo
+echo "Primary Storage (TiB):"
+echo -n "- Total: "; $mysql_command -e "select sum(capacity_bytes)/1099511627776 from storage_pool where removed is null;"
+echo -n "- Used:  "; $mysql_command -e "select sum(used_bytes)/1099511627776 from storage_pool where removed is null;"
+
 echo
 echo "ZONES:"
 
-$mysql_command -e "select id,name from data_center where removed is null;"
+$mysql_command -e "select name from data_center where removed is null;"
 
-
+echo
+echo "--------------------------------"
 echo
 echo "Showing pods, clusters and hypervisors for each zone:"
 echo
@@ -49,7 +64,7 @@ for clusterid in $($mysql_command -e "select id from cluster where removed is nu
 echo -n "-- CLUSTER: "
 $mysql_command -e "select name from cluster where removed is null and data_center_id="$zone" and pod_id="$podid" and id="$clusterid";"
 echo "--- HYPERVISORS:"
-$mysql_command -e "select name,private_ip_address,storage_ip_address,public_ip_address from host where type='"ROUTING"' and cluster_id="$clusterid";"
+$mysql_command -e "select name,private_ip_address,storage_ip_address,public_ip_address from host where removed is null and type='"ROUTING"' and cluster_id="$clusterid";"
 done
 done
 echo "#################################"
