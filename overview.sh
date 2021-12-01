@@ -17,8 +17,8 @@ export PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin
 
 # please adjust the below with the correct MySQL credentials
 dbuser="root"
-dbpassword="P@ssword123"
-db="testlab"
+dbpassword="password"
+db="cloud"
 dbhost="localhost"
 
 mysql_command="mysql -u"$dbuser" -p"$dbpassword" -h"$dbhost" "$db" -N -s -r"
