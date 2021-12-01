@@ -6,11 +6,19 @@
 
 export PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin
 
+## you can let the script read the DB login from the cloudstack config files, if they exist, else specify them below as per the example
+#msKey=$(cat /etc/cloudstack/management/key)
+#encPassword=$(sed '/^\#/d' /etc/cloudstack/management/db.properties | grep 'db.cloud.password'  | tail -n 1 | cut -d "=" -f2- | sed 's/^[[:space:]]*//;s/[[:space:]]*$//'i | sed 's/^ENC(\(.*\))/\1/')
+#dbhost=$(sed '/^\#/d' /etc/cloudstack/management/db.properties | grep 'db.cloud.host'  | tail -n 1 | cut -d "=" -f2- | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+#dbuser=$(sed '/^\#/d' /etc/cloudstack/management/db.properties | grep 'db.cloud.username'  | tail -n 1 | cut -d "=" -f2- | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+#jasypt=$(ls /usr/share/cloudstack-common/lib/jasypt-*.jar |head -n1)
+#dbpassword=(`java -classpath $jasypt org.jasypt.intf.cli.JasyptPBEStringDecryptionCLI decrypt.sh input=$encPassword password=$msKey verbose=false`)
+
 
 # please adjust the below with the correct MySQL credentials
 dbuser="root"
-dbpassword="password"
-db="cloud"
+dbpassword="P@ssword123"
+db="testlab"
 dbhost="localhost"
 
 mysql_command="mysql -u"$dbuser" -p"$dbpassword" -h"$dbhost" "$db" -N -s -r"
