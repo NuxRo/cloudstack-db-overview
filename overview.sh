@@ -11,6 +11,7 @@ export PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin
 #encPassword=$(sed '/^\#/d' /etc/cloudstack/management/db.properties | grep 'db.cloud.password'  | tail -n 1 | cut -d "=" -f2- | sed 's/^[[:space:]]*//;s/[[:space:]]*$//'i | sed 's/^ENC(\(.*\))/\1/')
 #dbhost=$(sed '/^\#/d' /etc/cloudstack/management/db.properties | grep 'db.cloud.host'  | tail -n 1 | cut -d "=" -f2- | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
 #dbuser=$(sed '/^\#/d' /etc/cloudstack/management/db.properties | grep 'db.cloud.username'  | tail -n 1 | cut -d "=" -f2- | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+#db=$(sed '/^\#/d' /etc/cloudstack/management/db.properties | grep 'db.cloud.name'  | tail -n 1 | cut -d "=" -f2- | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
 #jasypt=$(ls /usr/share/cloudstack-common/lib/jasypt-*.jar |head -n1)
 #dbpassword=(`java -classpath $jasypt org.jasypt.intf.cli.JasyptPBEStringDecryptionCLI decrypt.sh input=$encPassword password=$msKey verbose=false`)
 
